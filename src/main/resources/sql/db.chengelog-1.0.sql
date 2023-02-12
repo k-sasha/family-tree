@@ -10,3 +10,13 @@ create table if not exists family_tree (
     );
 
 --rollback drop table family_tree;
+
+--changeset alex:2
+create table if not exists relationships (
+                                             parent_id bigint not null,
+                                             child_id bigint not null,
+                                             primary key (parent_id,  child_id),
+    parent_id bigint references family_tree(id)
+    child_id bigint references family_tree(id)
+    );
+--rollback drop table relationships;

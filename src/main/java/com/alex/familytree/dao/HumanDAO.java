@@ -14,6 +14,6 @@ public interface HumanDAO {
 
     void deleteHuman(int id);
 
-
+    Human assignChildToParent(int parentId, int childId);
 
 }

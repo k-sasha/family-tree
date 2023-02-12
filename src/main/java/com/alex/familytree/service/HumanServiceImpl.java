@@ -36,4 +36,10 @@ public class HumanServiceImpl implements HumanService{
     public void deleteHuman(int id) {
         humanDAO.deleteHuman(id);
     }
+
+    @Override
+    @Transactional
+    public Human assignChildToParent(int parentId, int childId) {
+        return humanDAO.assignChildToParent(parentId, childId);
+    }
 }

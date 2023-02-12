@@ -42,5 +42,15 @@ public class HumanDAOImpl implements HumanDAO {
         query.executeUpdate();
     }
 
-
+    @Override
+    public Human assignChildToParent(int parentId, int childId) {
+        Human parent = entityManager.find(Human.class, parentId);
+        Human child = entityManager.find(Human.class, childId);
+        Set<Human> children = parent.getChildren();
+        children.add(child);
+        Set<Human> parents = child.getParents();
+        parents.add(parent);
+        entityManager.merge(child);
+        return entityManager.merge(parent);
+    }
 }

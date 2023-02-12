@@ -26,6 +26,19 @@ public class Human {
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "relationships",
+            joinColumns = {@JoinColumn (name = "child_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "parent_id", referencedColumnName = "id")}
+    )
+    private Set<Human> parents = new HashSet<>();
+
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "parents")
+    private Set<Human> children = new HashSet<>();
+
 
     public Human() {
     }
@@ -78,4 +91,19 @@ public class Human {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public Set<Human> getParents() {
+        return parents;
+    }
+
+    public void setParents(Set<Human> parents) {
+        this.parents = parents;
+    }
+
+    public Set<Human> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<Human> children) {
+        this.children = children;
+    }
 }

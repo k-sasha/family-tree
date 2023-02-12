@@ -9,4 +9,5 @@ public interface HumanService {
     void saveHuman(Human human);
     Human getHuman(int id);
     void deleteHuman(int id);
+    Human assignChildToParent(int parentId, int childId);
 }

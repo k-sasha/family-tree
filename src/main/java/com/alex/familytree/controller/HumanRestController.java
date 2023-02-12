@@ -43,4 +43,8 @@ public class HumanRestController {
         return "Human with id = " + id + " was deleted";
     }
 
+    @PutMapping("/{parentId}/child/{childId}")
+    public Human assignChildToParent(@PathVariable int parentId, @PathVariable int childId) {
+        return humanService.assignChildToParent(parentId, childId);
+    }
 }
