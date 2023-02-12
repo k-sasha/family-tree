@@ -6,10 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Repository
-public class HumanDAOImpl implements HumanDAO{
+public class HumanDAOImpl implements HumanDAO {
     @Autowired
     private EntityManager entityManager;
 
@@ -19,4 +21,26 @@ public class HumanDAOImpl implements HumanDAO{
         List<Human> allHumans = query.getResultList();
         return allHumans;
     }
+
+    @Override
+    public void saveHuman(Human human) {
+        Human newHuman = entityManager.merge(human);
+        human.setId(newHuman.getId());
+    }
+
+    @Override
+    public Human getHuman(int id) {
+        Human human = entityManager.find(Human.class, id);
+        return human;
+    }
+
+    @Override
+    public void deleteHuman(int id) {
+        Query query = entityManager.createQuery("delete from Human " +
+                "where id=:humanId");
+        query.setParameter("humanId", id);
+        query.executeUpdate();
+    }
+
+
 }

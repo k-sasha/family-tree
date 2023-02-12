@@ -3,9 +3,7 @@ package com.alex.familytree.controller;
 import com.alex.familytree.entity.Human;
 import com.alex.familytree.service.HumanService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,8 +14,33 @@ public class HumanRestController {
     private HumanService humanService;
 
     @GetMapping("/humans")
-    public List<Human> showAllHumans(){
+    public List<Human> showAllHumans() {
         List<Human> allHumans = humanService.getAllHumans();
         return allHumans;
     }
+
+    @PostMapping("/humans")
+    public Human addHuman(@RequestBody Human human) {
+        humanService.saveHuman(human);
+        return human;
+    }
+
+    @PutMapping("/humans")
+    public Human updateHuman(@RequestBody Human human) {
+        humanService.saveHuman(human);
+        return human;
+    }
+
+    @GetMapping("/{id}")
+    public Human getHuman(@PathVariable int id) {
+        Human human = humanService.getHuman(id);
+        return human;
+    }
+
+    @DeleteMapping("/humans/{id}")
+    public String deleteHuman(@PathVariable int id) {
+        humanService.deleteHuman(id);
+        return "Human with id = " + id + " was deleted";
+    }
+
 }

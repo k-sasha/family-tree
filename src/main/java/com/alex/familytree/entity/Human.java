@@ -1,7 +1,9 @@
 package com.alex.familytree.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "family_tree")
@@ -23,6 +25,7 @@ public class Human {
 
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
+
 
     public Human() {
     }
@@ -74,4 +77,5 @@ public class Human {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
 }

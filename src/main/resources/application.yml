@@ -3,12 +3,12 @@ spring:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/familytree
     username: sasha
-    password: 2539
+    password: sasha
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
   sql:
     init:
       mode: never
