@@ -1,5 +1,6 @@
 package com.alex.familytree.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -10,7 +11,8 @@ import java.util.*;
 public class Human {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "humanSeq")
+    @SequenceGenerator(name = "humanSeq", sequenceName = "human_seq", allocationSize = 1)
     @Column(name = "id")
     private int id;
 
@@ -24,6 +26,7 @@ public class Human {
     private String gender;
 
     @Column(name = "date_of_birth")
+    @JsonFormat(pattern = "MM-dd-yyyy")
     private Date dateOfBirth;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

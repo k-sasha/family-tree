@@ -8,24 +8,24 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/humans")
 public class HumanRestController {
     @Autowired
     private HumanService humanService;
 
-    @GetMapping("/humans")
+    @GetMapping
     public List<Human> showAllHumans() {
         List<Human> allHumans = humanService.getAllHumans();
         return allHumans;
     }
 
-    @PostMapping("/humans")
+    @PostMapping
     public Human addHuman(@RequestBody Human human) {
         humanService.saveHuman(human);
         return human;
     }
 
-    @PutMapping("/humans")
+    @PutMapping
     public Human updateHuman(@RequestBody Human human) {
         humanService.saveHuman(human);
         return human;
@@ -37,7 +37,7 @@ public class HumanRestController {
         return human;
     }
 
-    @DeleteMapping("/humans/{id}")
+    @DeleteMapping("/{id}")
     public String deleteHuman(@PathVariable int id) {
         humanService.deleteHuman(id);
         return "Human with id = " + id + " was deleted";

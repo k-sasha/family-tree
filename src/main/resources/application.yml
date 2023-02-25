@@ -1,4 +1,9 @@
+server:
+  servlet:
+    context-path: /api/
 spring:
+  liquibase:
+      change-log: classpath:/sql/db.changelog-master.xml
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/familytree
@@ -8,7 +13,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
   sql:
     init:
       mode: never
