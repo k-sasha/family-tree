@@ -39,7 +39,19 @@ public class HumanServiceImpl implements HumanService{
 
     @Override
     @Transactional
-    public Human assignChildToParent(int parentId, int childId) {
-        return humanDAO.assignChildToParent(parentId, childId);
+    public Human assignStepparentToChild(int stepparentId, int childId) {
+        return humanDAO.assignStepparentToChild(stepparentId, childId);
+    }
+
+    @Override
+    @Transactional
+    public int getHumanId(Human human) {
+        return humanDAO.getHumanId(human);
+    }
+
+    @Override
+    @Transactional
+    public void deleteStepparentFromChild(int stepparentId, int childId) {
+        humanDAO.deleteStepparentFromChild(stepparentId, childId);
     }
 }

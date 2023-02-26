@@ -43,8 +43,22 @@ public class HumanRestController {
         return "Human with id = " + id + " was deleted";
     }
 
-    @PutMapping("/{parentId}/child/{childId}")
-    public Human assignChildToParent(@PathVariable int parentId, @PathVariable int childId) {
-        return humanService.assignChildToParent(parentId, childId);
+    @PutMapping("/{childId}/stepparent/{stepparentId}")
+    public Human assignStepparentToChild(@PathVariable int stepparentId, @PathVariable int childId) {
+        return humanService.assignStepparentToChild(stepparentId, childId);
+    }
+
+    @PostMapping("/{childId}/stepparent")
+    public Human creatAndAssignStepparentToChild(@RequestBody Human stepparent, @PathVariable int childId) {
+        humanService.saveHuman(stepparent);
+        int stepparentId = humanService.getHumanId(stepparent);
+        humanService.assignStepparentToChild(stepparentId, childId);
+        return humanService.assignStepparentToChild(stepparentId, childId);
+    }
+
+    @DeleteMapping("/{childId}/stepparent/{stepparentId}")
+    public String deleteStepparentFromChild(@PathVariable int stepparentId, @PathVariable int childId) {
+        humanService.deleteStepparentFromChild(stepparentId, childId);
+        return "Stepparent with id = " + stepparentId + " was deleted from child with id = " + childId;
     }
 }

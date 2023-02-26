@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -43,14 +43,49 @@ public class HumanDAOImpl implements HumanDAO {
     }
 
     @Override
-    public Human assignChildToParent(int parentId, int childId) {
-        Human parent = entityManager.find(Human.class, parentId);
+    public Human assignStepparentToChild(int stepparentId, int childId) {
+        Human stepparent = entityManager.find(Human.class, stepparentId);
         Human child = entityManager.find(Human.class, childId);
-        Set<Human> children = parent.getChildren();
+        Set<Human> children = stepparent.getChildren();
         children.add(child);
-        Set<Human> parents = child.getParents();
-        parents.add(parent);
-        entityManager.merge(child);
-        return entityManager.merge(parent);
+        Set<Human> stepparents = child.getStepparents();
+        stepparents.add(stepparent);
+        entityManager.merge(stepparent);
+        return entityManager.merge(child);
+    }
+
+    @Override
+    public int getHumanId(Human human) {
+        try {
+            Query query = entityManager.createQuery("select h.id from Human h " +
+                    " where h.name=:humanName and h.surname=:humanSurname and h.gender=:humanGender " +
+                    " and h.dateOfBirth=:humanDataOfBirth");
+            query.setParameter("humanName", human.getName());
+            query.setParameter("humanSurname", human.getSurname());
+            query.setParameter("humanGender", human.getGender());
+            query.setParameter("humanDataOfBirth", human.getDateOfBirth());
+
+            Integer humanId = (Integer) query.getSingleResult();
+            return humanId;
+        } catch (NoResultException e) {
+            //TODO exception handling
+            return -1;
+        }
+    }
+
+    @Override
+    public void deleteStepparentFromChild(int stepparentId, int childId) {
+        Human stepparent = entityManager.find(Human.class, stepparentId);
+        Human child = entityManager.find(Human.class, childId);
+        if (stepparent == null || child == null) {
+            //TODO exception handling
+            return;
+        }
+        boolean removedChild = stepparent.getChildren().remove(child);
+        boolean removedParent = child.getStepparents().remove(stepparent);
+        if (removedChild || removedParent) {
+            entityManager.merge(stepparent);
+            entityManager.merge(child);
+        }
     }
 }

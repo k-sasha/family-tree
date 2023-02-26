@@ -33,13 +33,13 @@ public class Human {
     @JoinTable(
             name = "relationships",
             joinColumns = {@JoinColumn (name = "child_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "parent_id", referencedColumnName = "id")}
+            inverseJoinColumns = {@JoinColumn(name = "stepparent_id", referencedColumnName = "id")}
     )
-    private Set<Human> parents = new HashSet<>();
+    private Set<Human> stepparents = new HashSet<>();
 
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "parents")
+    @ManyToMany(mappedBy = "stepparents")
     private Set<Human> children = new HashSet<>();
 
 
@@ -94,12 +94,12 @@ public class Human {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Set<Human> getParents() {
-        return parents;
+    public Set<Human> getStepparents() {
+        return stepparents;
     }
 
-    public void setParents(Set<Human> parents) {
-        this.parents = parents;
+    public void setStepparents(Set<Human> parents) {
+        this.stepparents = parents;
     }
 
     public Set<Human> getChildren() {

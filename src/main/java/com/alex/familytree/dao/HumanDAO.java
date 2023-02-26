@@ -2,7 +2,6 @@ package com.alex.familytree.dao;
 
 import com.alex.familytree.entity.Human;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface HumanDAO {
@@ -14,6 +13,9 @@ public interface HumanDAO {
 
     void deleteHuman(int id);
 
-    Human assignChildToParent(int parentId, int childId);
+    Human assignStepparentToChild(int stepparentId, int childId);
 
+    int getHumanId(Human human);
+
+    void deleteStepparentFromChild(int stepparentId, int childId);
 }
