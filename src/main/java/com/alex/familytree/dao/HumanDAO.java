@@ -7,7 +7,7 @@ import java.util.List;
 public interface HumanDAO {
     List<Human> getAllHumans();
 
-    void saveHuman(Human human);
+    Human saveHuman(Human human);
 
     Human getHuman(int id);
 

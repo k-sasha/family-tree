@@ -21,8 +21,8 @@ public class HumanServiceImpl implements HumanService{
 
     @Override
     @Transactional
-    public void saveHuman(Human human) {
-        humanDAO.saveHuman(human);
+    public Human saveHuman(Human human) {
+        return humanDAO.saveHuman(human);
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface HumanService {
     List<Human> getAllHumans();
-    void saveHuman(Human human);
+    Human saveHuman(Human human);
     Human getHuman(int id);
     void deleteHuman(int id);
     Human assignStepparentToChild(int stepparentId, int childId);

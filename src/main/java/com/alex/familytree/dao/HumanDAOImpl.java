@@ -23,9 +23,10 @@ public class HumanDAOImpl implements HumanDAO {
     }
 
     @Override
-    public void saveHuman(Human human) {
+    public Human saveHuman(Human human) {
         Human newHuman = entityManager.merge(human);
         human.setId(newHuman.getId());
+        return newHuman;
     }
 
     @Override
