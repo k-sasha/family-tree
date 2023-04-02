@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -17,9 +19,12 @@ public class Human {
     private int id;
 
     @Column(name = "first_name")
+    @Size(min = 2, message = "name must be min 2 symbols")
+    @NotBlank(message = "name is required")
     private String name;
 
     @Column(name = "last_name")
+    @NotBlank(message = "surname is required")
     private String surname;
 
     @Column(name = "gender")
@@ -27,7 +32,8 @@ public class Human {
 
     @Column(name = "date_of_birth")
     @JsonFormat(pattern = "MM-dd-yyyy")
-    private Date dateOfBirth;
+    @Past(message = "Date of birth must be in the past and have the format 'MM-dd-yyyy'")
+    private LocalDate dateOfBirth;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
@@ -39,14 +45,14 @@ public class Human {
 
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "stepparents")
+    @ManyToMany(mappedBy = "stepparents",  cascade = CascadeType.ALL)
     private Set<Human> children = new HashSet<>();
 
 
     public Human() {
     }
 
-    public Human(int id, String name, String surname, String gender, Date dateOfBirth) {
+    public Human(int id, String name, String surname, String gender, LocalDate dateOfBirth) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -86,11 +92,11 @@ public class Human {
         this.gender = gender;
     }
 
-    public Date getDateOfBirth() {
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 

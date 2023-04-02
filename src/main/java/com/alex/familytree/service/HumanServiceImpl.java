@@ -1,57 +1,50 @@
 package com.alex.familytree.service;
 
-import com.alex.familytree.dao.HumanDAO;
+import com.alex.familytree.repository.HumanRepository;
 import com.alex.familytree.entity.Human;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HumanServiceImpl implements HumanService{
     @Autowired
-    private HumanDAO humanDAO;
+    private HumanRepository humanRepository;
 
     @Override
-    @Transactional
     public List<Human> getAllHumans() {
-        return humanDAO.getAllHumans();
+        return humanRepository.findAll();
     }
 
     @Override
-    @Transactional
     public Human saveHuman(Human human) {
-        return humanDAO.saveHuman(human);
+        return humanRepository.save(human);
     }
 
     @Override
-    @Transactional
-    public Human getHuman(int id) {
-        return humanDAO.getHuman(id);
+    public Optional <Human> getHuman(int id) {
+        return humanRepository.findById(id);
     }
 
     @Override
-    @Transactional
     public void deleteHuman(int id) {
-        humanDAO.deleteHuman(id);
+        humanRepository.deleteById(id);
     }
 
-    @Override
-    @Transactional
-    public Human assignStepparentToChild(int stepparentId, int childId) {
-        return humanDAO.assignStepparentToChild(stepparentId, childId);
-    }
+//    @Override
+//    public void assignStepparentToChild(int stepparentId, int childId) {
+//        humanRepository.assignStepparentToChild(stepparentId, childId);
+//    }
 
-    @Override
-    @Transactional
-    public int getHumanId(Human human) {
-        return humanDAO.getHumanId(human);
-    }
-
-    @Override
-    @Transactional
-    public void deleteStepparentFromChild(int stepparentId, int childId) {
-        humanDAO.deleteStepparentFromChild(stepparentId, childId);
-    }
+//    @Override
+//    public int getHumanId(Human human) {
+//        return humanRepository.getHumanId(human);
+//    }
+//
+//    @Override
+//    public void deleteStepparentFromChild(int stepparentId, int childId) {
+//        humanRepository.deleteStepparentFromChild(stepparentId, childId);
+//    }
 }
