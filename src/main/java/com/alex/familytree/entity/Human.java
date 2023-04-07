@@ -2,6 +2,9 @@ package com.alex.familytree.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -10,6 +13,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "family_tree")
+@Getter @Setter @NoArgsConstructor
 public class Human {
 
     @Id
@@ -35,7 +39,7 @@ public class Human {
     @Past(message = "Date of birth must be in the past and have the format 'MM-dd-yyyy'")
     private LocalDate dateOfBirth;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "relationships",
             joinColumns = {@JoinColumn (name = "child_id", referencedColumnName = "id")},
@@ -45,12 +49,8 @@ public class Human {
 
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "stepparents",  cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "stepparents")
     private Set<Human> children = new HashSet<>();
-
-
-    public Human() {
-    }
 
     public Human(int id, String name, String surname, String gender, LocalDate dateOfBirth) {
         this.id = id;
@@ -60,59 +60,4 @@ public class Human {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Set<Human> getStepparents() {
-        return stepparents;
-    }
-
-    public void setStepparents(Set<Human> parents) {
-        this.stepparents = parents;
-    }
-
-    public Set<Human> getChildren() {
-        return children;
-    }
-
-    public void setChildren(Set<Human> children) {
-        this.children = children;
-    }
 }

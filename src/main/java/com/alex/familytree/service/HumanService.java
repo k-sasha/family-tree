@@ -8,10 +8,7 @@ import java.util.Optional;
 public interface HumanService {
     List<Human> getAllHumans();
     Human saveHuman(Human human);
-    Optional<Human> getHuman(int id);
+    Human getHuman(int id);
     void deleteHuman(int id);
-//    void assignStepparentToChild(int stepparentId, int childId);
-//    int getHumanId(Human human);
-//
-//    void deleteStepparentFromChild(int stepparentId, int childId);
+    void assignStepparentToChild(int stepparentId, int childId);
 }
